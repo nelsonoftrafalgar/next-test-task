@@ -1,0 +1,27 @@
+.articles-image-container {
+  width: 100%;
+
+  > div {
+    position: unset !important;
+  }
+
+  .image {
+    position: relative !important;
+    height: unset !important;
+  }
+
+  &.small {
+    @include media-breakpoint-up(md) {
+      max-width: 220px;
+      min-width: 220px;
+    }
+  }
+}
+
+.article-headline {
+  font-size: 16px;
+  font-weight: 600;
+  @include media-breakpoint-up(md) {
+    font-size: 22px;
+  }
+}

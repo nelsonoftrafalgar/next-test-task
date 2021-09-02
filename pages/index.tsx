@@ -1,21 +1,16 @@
-import useSWR, { SWRConfig } from 'swr'
-
+import Articles from 'components/Articles'
 import { FC } from 'react'
 import { IArticles } from 'api/articles/types'
+import { SWRConfig } from 'swr'
 import { getArticles } from 'api/articles'
 
-interface IHomeProps {
+interface IProps {
   fallback: {
-    [key: string]: IArticles
+    [key: string]: IArticles[]
   }
 }
 
-const Articles = () => {
-  const { data } = useSWR('/api/articles', getArticles)
-  return <pre>{JSON.stringify(data, undefined, 2)}</pre>
-}
-
-const Home: FC<IHomeProps> = ({ fallback }) => {
+const Home: FC<IProps> = ({ fallback }) => {
   return (
     <SWRConfig value={{ fallback }}>
       <Articles />
