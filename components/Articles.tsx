@@ -1,11 +1,12 @@
 import { Col, Container, Row } from 'react-bootstrap'
-import useSWR, { useSWRInfinite } from 'swr'
 
 import { ICategoriesData } from 'api/articles/types'
 import Image from 'next/image'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import axios from 'axios'
 import { getInitialArticles } from 'api/articles'
+import useSWR from 'swr'
+import useSWRInfinite from 'swr/infinite'
 import { useState } from 'react'
 
 const Articles = () => {
