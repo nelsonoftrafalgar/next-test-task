@@ -2,6 +2,6 @@
 module.exports = {
   reactStrictMode: true,
   images: {
-    domains: ['static-img.aripaev.ee'],
+    domains: ['static-img.aripaev.ee', 'via.placeholder.com'],
   },
 }

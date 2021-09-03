@@ -1,11 +1,12 @@
+import { IDataItem } from './types'
 import axios from 'axios'
 
-export const getArticles = async () => {
+export const getInitialArticles = async () => {
   try {
-    const response = await axios.get(
+    const { data } = await axios.get<IDataItem[]>(
       'https://listapi.aripaev.ee/v1/category/news?channel_id=aripaev'
     )
-    return response.data
+    return data
   } catch (error) {
     console.log(error)
   }

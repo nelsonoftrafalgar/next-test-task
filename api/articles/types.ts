@@ -1,12 +1,12 @@
-export interface IArticles {
+export interface IDataItem {
   uuid: string
   link: string
   date: string
-  headline: string
+  headline: string | null
   teaser_title: string | null
   teaser_text: string | null
-  leadin: string
-  authors: string[]
+  leadin: string | null
+  authors: string[] | null
   updated: string | null
   video_teaser: string | null
   category: {
@@ -15,8 +15,8 @@ export interface IArticles {
     slug: string
   }
   images: {
-    preview: string
-    thumbnail: string
+    preview: string | null
+    thumbnail: string | null
   }
   flags: string[]
   locked: boolean
@@ -30,4 +30,9 @@ export interface IArticles {
   absolute_url: string
   embedded_event_id: string | null
   tag: string | null
+}
+
+export interface ICategoriesData {
+  news: IDataItem[]
+  investor: IDataItem[]
 }

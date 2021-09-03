@@ -1,12 +1,12 @@
 import Articles from 'components/Articles'
 import { FC } from 'react'
-import { IArticles } from 'api/articles/types'
+import { IDataItem } from 'api/articles/types'
 import { SWRConfig } from 'swr'
-import { getArticles } from 'api/articles'
+import { getInitialArticles } from 'api/articles'
 
 interface IProps {
   fallback: {
-    [key: string]: IArticles[]
+    [key: string]: IDataItem[]
   }
 }
 
@@ -21,7 +21,7 @@ const Home: FC<IProps> = ({ fallback }) => {
 export default Home
 
 export async function getStaticProps() {
-  const articles = await getArticles()
+  const articles = await getInitialArticles()
   return {
     props: {
       fallback: {
