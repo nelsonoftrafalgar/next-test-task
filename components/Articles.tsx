@@ -76,6 +76,7 @@ const Articles = () => {
         hasMore={hasMore}
         loader={<h3> Loading...</h3>}
         endMessage={<h4>Nothing more to show</h4>}
+        className='articles-infinite-scroll-container'
       >
         <Row>
           {initialData?.slice(3).map((item) => (
