@@ -4,9 +4,11 @@
   border: 0;
   box-sizing: border-box;
 }
+
 body {
   min-height: 100vh;
 }
+
 div#__next {
   display: flex;
   flex-direction: column;
@@ -16,4 +18,8 @@ div#__next {
   position: relative;
   background: #fff;
   font-family: sans-serif;
+}
+
+a {
+  text-decoration: none;
 }
