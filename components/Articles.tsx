@@ -123,20 +123,26 @@ const Articles = () => {
               key={item.uuid}
               className='d-flex flex-sm-column flex-md-row mb-4'
             >
-              <div className='articles-image-container small'>
-                <Image
-                  src={item.images.preview || 'https://via.placeholder.com/150'}
-                  alt=''
-                  layout='fill'
-                  className='image'
-                />
-              </div>
-              <div>
-                <h3 className='my-sm-3 ms-md-3 my-md-0 article-headline'>
-                  {item.headline || 'Headline placeholder'}
-                </h3>
-                <p className='d-sm-none d-md-block ms-3'>{item.leadin}</p>
-              </div>
+              <Link href='/[...rest]' as={trimmLink(item.link)}>
+                <a className='d-flex flex-sm-column flex-md-row'>
+                  <div className='articles-image-container small'>
+                    <Image
+                      src={
+                        item.images.preview || 'https://via.placeholder.com/150'
+                      }
+                      alt=''
+                      layout='fill'
+                      className='image'
+                    />
+                  </div>
+                  <div>
+                    <h3 className='my-sm-3 ms-md-3 my-md-0 article-headline'>
+                      {item.headline || 'Headline placeholder'}
+                    </h3>
+                    <p className='d-sm-none d-md-block ms-3'>{item.leadin}</p>
+                  </div>
+                </a>
+              </Link>
             </Col>
           ))}
         </Row>
