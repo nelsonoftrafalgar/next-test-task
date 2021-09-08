@@ -8,6 +8,10 @@
   .image {
     position: relative !important;
     height: unset !important;
+
+    &:hover {
+      opacity: 0.9;
+    }
   }
 
   &.small {

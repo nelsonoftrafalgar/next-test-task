@@ -6,7 +6,6 @@ import InfiniteScroll from 'react-infinite-scroll-component'
 import Link from 'next/link'
 import axios from 'axios'
 import { getInitialArticles } from 'api/articles'
-import { trimmLink } from 'utils/trimmLink'
 import useSWR from 'swr'
 import useSWRInfinite from 'swr/infinite'
 import { useState } from 'react'
@@ -35,9 +34,9 @@ const Articles = () => {
   return (
     <Container className='pt-3'>
       <Row>
-        {initialData?.slice(0, 1).map((item) => (
+        {initialData?.articles?.slice(0, 1).map((item) => (
           <Col md={8} key={item.uuid}>
-            <Link href={trimmLink(item.link)}>
+            <Link href={item.link}>
               <a>
                 <div className='articles-image-container'>
                   <Image
@@ -58,9 +57,9 @@ const Articles = () => {
         ))}
         <Col md={4}>
           <Row>
-            {initialData?.slice(1, 3).map((item) => (
+            {initialData?.articles?.slice(1, 3).map((item) => (
               <Col xs={6} md={12} key={item.uuid}>
-                <Link href={trimmLink(item.link)}>
+                <Link href={item.link}>
                   <a>
                     <div className='articles-image-container'>
                       <Image
@@ -92,9 +91,9 @@ const Articles = () => {
         className='articles-infinite-scroll-container'
       >
         <Row>
-          {initialData?.slice(3).map((item) => (
+          {initialData?.articles?.slice(3).map((item) => (
             <Col xs={6} md={12} key={item.uuid} className='mb-4'>
-              <Link href={trimmLink(item.link)}>
+              <Link href={item.link}>
                 <a className='d-flex flex-sm-column flex-md-row'>
                   <div className='articles-image-container small'>
                     <Image
@@ -123,7 +122,7 @@ const Articles = () => {
               key={item.uuid}
               className='d-flex flex-sm-column flex-md-row mb-4'
             >
-              <Link href='/[...rest]' as={trimmLink(item.link)}>
+              <Link href='/[...rest]' as={item.link}>
                 <a className='d-flex flex-sm-column flex-md-row'>
                   <div className='articles-image-container small'>
                     <Image

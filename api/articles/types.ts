@@ -36,3 +36,11 @@ export interface ICategoriesData {
   news: IDataItem[]
   investor: IDataItem[]
 }
+
+export interface ISingleArticle {
+  body: {
+    type: 'headline' | 'x-im/image' | 'preamble' | 'body'
+    content?: string
+    url?: string
+  }[]
+}
