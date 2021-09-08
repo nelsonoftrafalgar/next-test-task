@@ -16,6 +16,12 @@
       min-width: 220px;
     }
   }
+
+  noscript {
+    .image {
+      display: none !important;
+    }
+  }
 }
 
 .article-headline {

@@ -41,6 +41,7 @@ const Articles = () => {
                 alt=''
                 layout='fill'
                 className='image'
+                loading='eager'
               />
             </div>
             <h3 className='my-3 fw-bold'>
@@ -60,6 +61,7 @@ const Articles = () => {
                     alt=''
                     layout='fill'
                     className='image'
+                    loading='eager'
                   />
                 </div>
                 <h3 className='article-headline my-3'>
@@ -92,6 +94,7 @@ const Articles = () => {
                   alt=''
                   layout='fill'
                   className='image'
+                  loading='eager'
                 />
               </div>
               <div>
