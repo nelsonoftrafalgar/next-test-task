@@ -1,4 +1,4 @@
-import Article from './[category]/[year]/[month]/[day]/[article]'
+import Article from './[article]'
 import { getSingleArticle } from 'api/articles'
 import { useRouter } from 'next/dist/client/router'
 import useSWR from 'swr'
