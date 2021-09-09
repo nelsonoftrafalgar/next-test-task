@@ -1,6 +1,6 @@
 import { Col, Container, Row } from 'react-bootstrap'
 
-import { ICategoriesData } from 'api/articles/types'
+import { IInfiniteScrollData } from 'api/articles/types'
 import Image from 'next/image'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import Link from 'next/link'
@@ -15,15 +15,21 @@ const Articles = () => {
   const { data: initialData } = useSWR('/api/articles', getInitialArticles)
   const { size, setSize, data } = useSWRInfinite(
     (index: number) => {
-      return `https://listapi.aripaev.ee/v1/category/grouped?categories=news,investor&channel_id=aripaev&page=${
+      return `https://listapi.aripaev.ee/v1/category?categories=&exclude_categories=static&exclude_uuids=&limit=8&page=${
         index + 1
       }`
     },
     (url: string) =>
-      axios.get<ICategoriesData>(url).then(({ data }) => {
-        if (!data.investor.length && !data.news.length) setHasMore(false)
-        return [...data.investor, ...data.news]
-      })
+      axios
+        .get<IInfiniteScrollData>(url, {
+          headers: {
+            'X-Channel-Id': 'laanevirumaa',
+          },
+        })
+        .then(({ data }) => {
+          if (data.meta.current_page === data.meta.last_page) setHasMore(false)
+          return data.articles
+        })
   )
 
   const infiniteData = data?.reduce((acc, val) => [...acc, ...val], []) || []

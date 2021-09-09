@@ -32,9 +32,14 @@ export interface IDataItem {
   tag: string | null
 }
 
-export interface ICategoriesData {
-  news: IDataItem[]
-  investor: IDataItem[]
+export interface IInfiniteScrollData {
+  articles: IDataItem[]
+  meta: {
+    total: number
+    per_page: number
+    current_page: number
+    last_page: number
+  }
 }
 
 export interface ISingleArticle {

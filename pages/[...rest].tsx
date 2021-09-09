@@ -1,8 +1,17 @@
+import Article from './[category]/[year]/[month]/[day]/[article]'
+import { getSingleArticle } from 'api/articles'
 import { useRouter } from 'next/dist/client/router'
+import useSWR from 'swr'
 
 const DynamicArticle = () => {
   const router = useRouter()
-  return <p>hello from dynamic article {router.isReady && router.asPath}</p>
+
+  const { data } = useSWR(router.isReady ? router.asPath : null, () =>
+    getSingleArticle(router.asPath.slice(1))
+  )
+  if (!data) return <p>Loading...</p>
+
+  return <Article article={data} />
 }
 
 export default DynamicArticle
