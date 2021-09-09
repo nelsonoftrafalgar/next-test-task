@@ -1,7 +1,4 @@
-import React, { FC } from 'react'
-import { getInitialArticles, getSingleArticle } from 'api/articles'
-
-import { GetStaticProps } from 'next'
+import { FC } from 'react'
 import { ISingleArticle } from 'api/articles/types'
 import Image from 'next/image'
 
@@ -54,24 +51,3 @@ const Article: FC<IProps> = ({ article }) => {
 }
 
 export default Article
-
-export const getStaticPaths = async () => {
-  const { articles } = await getInitialArticles()
-
-  const paths = articles.map((item) => {
-    const [category, year, month, day, article] = item.link.split('/')
-    return { params: { category, year, month, day, article } }
-  })
-
-  return { paths, fallback: false }
-}
-
-export const getStaticProps: GetStaticProps = async ({ params }) => {
-  const link = Object.values(params!).join('/')
-  const article = await getSingleArticle(link)
-  return {
-    props: {
-      article,
-    },
-  }
-}

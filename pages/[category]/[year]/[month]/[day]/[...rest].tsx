@@ -1,4 +1,4 @@
-import Article from './[article]'
+import Article from 'components/Article'
 import { getSingleArticle } from 'api/articles'
 import { useRouter } from 'next/dist/client/router'
 import useSWR from 'swr'
