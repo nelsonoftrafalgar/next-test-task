@@ -33,3 +33,21 @@
 .articles-infinite-scroll-container {
   overflow: unset !important;
 }
+
+.articles-menu {
+  height: 70px;
+  background-color: #fff;
+  position: fixed;
+  top: 0;
+  z-index: 1;
+  max-width: 1200px;
+  width: 100%;
+  border-bottom: 1px solid #bbb;
+  display: flex;
+
+  .articles-menu-select {
+    align-self: center;
+    border: 1px solid #bbb;
+    padding: 5px;
+  }
+}

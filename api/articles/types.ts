@@ -21,15 +21,17 @@ export interface IDataItem {
   flags: string[]
   locked: boolean
   lock: string
-  tags: {
-    uuid: string
-    type: string
-    name: string
-    slug: string
-  }[]
+  tags: ITag[]
   absolute_url: string
   embedded_event_id: string | null
   tag: string | null
+}
+
+export interface ITag {
+  uuid: string
+  type: string
+  name: string
+  slug: string
 }
 
 export interface IInfiniteScrollData {
