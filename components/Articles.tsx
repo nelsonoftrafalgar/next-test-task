@@ -45,6 +45,7 @@ const Articles = () => {
         initialData={initialData!.articles}
         infiniteData={infiniteData}
         setSelectedTag={setSelectedTag}
+        selectedTag={selectedTag}
       />
       <Container className='pt-5'>
         <Row className='pt-5'>
