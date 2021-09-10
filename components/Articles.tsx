@@ -123,7 +123,7 @@ const Articles = () => {
               .map(({ uuid, link, images, headline, leadin }) => (
                 <Col xs={6} md={12} key={uuid} className='mb-4'>
                   <Link href={link}>
-                    <a className='d-flex flex-sm-column flex-md-row'>
+                    <a className='d-flex flex-column flex-md-row'>
                       <div className='articles-image-container small'>
                         <Image
                           src={
@@ -147,14 +147,9 @@ const Articles = () => {
               ))}
             {filteredInfiniteData.map(
               ({ uuid, link, images, headline, leadin }) => (
-                <Col
-                  xs={6}
-                  md={12}
-                  key={uuid}
-                  className='d-flex flex-sm-column flex-md-row mb-4'
-                >
+                <Col xs={6} md={12} key={uuid} className='mb-4'>
                   <Link href='/[...rest]' as={link}>
-                    <a className='d-flex flex-sm-column flex-md-row'>
+                    <a className='d-flex flex-column flex-md-row'>
                       <div className='articles-image-container small'>
                         <Image
                           src={
