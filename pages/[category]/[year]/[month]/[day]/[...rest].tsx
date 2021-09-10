@@ -1,19 +1,19 @@
+import { FC } from 'react'
+import { GetServerSideProps } from 'next'
+import { ISingleArticle } from 'api/articles/types'
 import Image from 'next/image'
 import { getSingleArticle } from 'api/articles'
-import { useRouter } from 'next/dist/client/router'
-import useSWR from 'swr'
 
-const DynamicArticle = () => {
-  const router = useRouter()
-  const { data } = useSWR(router.isReady ? router.asPath : null, () =>
-    getSingleArticle(router.asPath.slice(1))
-  )
+interface IProps {
+  article: ISingleArticle
+}
 
-  if (!data) return <p>Loading...</p>
+const DynamicArticle: FC<IProps> = ({ article }) => {
+  if (!article) return <p>Loading...</p>
 
   return (
     <div className='w-75 pt-4'>
-      {data.body.map((item, idx) => {
+      {article.body.map((item, idx) => {
         switch (item.type) {
           case 'headline':
             return (
@@ -29,6 +29,7 @@ const DynamicArticle = () => {
                   alt=''
                   layout='fill'
                   className='image'
+                  loading='eager'
                 />
               </div>
             )
@@ -55,3 +56,12 @@ const DynamicArticle = () => {
 }
 
 export default DynamicArticle
+
+export const getServerSideProps: GetServerSideProps = async ({
+  resolvedUrl,
+}) => {
+  const article = await getSingleArticle(resolvedUrl.slice(1))
+  return {
+    props: { article },
+  }
+}

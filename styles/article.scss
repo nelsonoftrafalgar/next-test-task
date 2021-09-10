@@ -9,4 +9,10 @@
     position: relative !important;
     height: unset !important;
   }
+
+  noscript {
+    .image {
+      display: none !important;
+    }
+  }
 }
