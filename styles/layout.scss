@@ -7,6 +7,12 @@
 
 body {
   min-height: 100vh;
+
+  &.menu-open {
+    @include media-breakpoint-down(md) {
+      overflow: hidden;
+    }
+  }
 }
 
 div#__next {
