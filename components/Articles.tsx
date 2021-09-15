@@ -67,7 +67,7 @@ const Articles = () => {
                       />
                     </div>
                     <h3 className='my-3 fw-bold'>
-                      {headline || 'Headline placeholder'}
+                      {headline || 'Headline test placeholder'}
                     </h3>
                   </a>
                 </Link>
