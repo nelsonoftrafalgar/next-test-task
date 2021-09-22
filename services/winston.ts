@@ -8,8 +8,8 @@ class CustomTransport extends Transport {
   constructor(opts: TransportStream.TransportStreamOptions) {
     super(opts)
   }
-  log(info: ILogData, callback: () => void) {
-    logger(JSON.stringify(info))
+  async log(info: ILogData, callback: () => void) {
+    await logger(JSON.stringify(info))
     callback()
   }
 }
