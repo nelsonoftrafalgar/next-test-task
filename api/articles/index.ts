@@ -1,6 +1,38 @@
 import { IDataItem, ISingleArticle } from './types'
+import axios, { AxiosRequestConfig } from 'axios'
 
-import axios from 'axios'
+export interface IAxiosRequestCustomConfig extends AxiosRequestConfig {
+  meta: {
+    requestStartedAt: number
+    responseEndedAt?: number
+    elapsedTime?: string
+  }
+}
+
+interface IAxiosCustomResponse {
+  data: any
+  status: number
+  statusText: string
+  headers: any
+  config: IAxiosRequestCustomConfig
+  request?: any
+}
+
+axios.interceptors.request.use((config) => {
+  const customConfig = { ...config } as IAxiosRequestCustomConfig
+  customConfig.meta = { requestStartedAt: new Date().getTime() }
+  return customConfig
+})
+
+axios.interceptors.response.use((response) => {
+  const customResponse = { ...response } as IAxiosCustomResponse
+  customResponse.config.meta.responseEndedAt = new Date().getTime()
+  customResponse.config.meta.elapsedTime = `${
+    customResponse.config.meta.responseEndedAt -
+    customResponse.config.meta.requestStartedAt
+  }ms`
+  return customResponse
+})
 
 export const getInitialArticles = async () => {
   const { data } = await axios.get<{ articles: IDataItem[] }>(
@@ -15,7 +47,7 @@ export const getInitialArticles = async () => {
 }
 
 export const getSingleArticle = async (url: string) => {
-  const { data } = await axios.get<ISingleArticle>(
+  const response = await axios.get<ISingleArticle>(
     `https://frontcontentapi.aripaev.ee/v2/article?url=${url}&body=1`,
     {
       headers: {
@@ -24,5 +56,5 @@ export const getSingleArticle = async (url: string) => {
       },
     }
   )
-  return data
+  return response
 }

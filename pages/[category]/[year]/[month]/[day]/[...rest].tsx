@@ -2,7 +2,9 @@ import { FC } from 'react'
 import { GetServerSideProps } from 'next'
 import { ISingleArticle } from 'api/articles/types'
 import Image from 'next/image'
+import { buildLogData } from 'utils/buildLogData'
 import { getSingleArticle } from 'api/articles'
+import { winstonLogger } from 'services/winston'
 
 interface IProps {
   article: ISingleArticle
@@ -57,11 +59,14 @@ const DynamicArticle: FC<IProps> = ({ article }) => {
 
 export default DynamicArticle
 
-export const getServerSideProps: GetServerSideProps = async ({
-  resolvedUrl,
-}) => {
-  const article = await getSingleArticle(resolvedUrl.slice(1))
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const apiResponse = await getSingleArticle(context.resolvedUrl.slice(1))
+  const { req, res } = context
+  const logData = buildLogData(apiResponse, req, res)
+
+  winstonLogger.info('DynamicArticle getServerSideProps info', logData)
+
   return {
-    props: { article },
+    props: { article: apiResponse.data },
   }
 }
