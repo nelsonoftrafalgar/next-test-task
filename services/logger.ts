@@ -49,6 +49,7 @@ const sendLogEvent = async (message: string) => {
 }
 
 export const logger = async (message: string) => {
+  console.log('log message', message)
   try {
     await createLogGroup()
     await createLogStream()
