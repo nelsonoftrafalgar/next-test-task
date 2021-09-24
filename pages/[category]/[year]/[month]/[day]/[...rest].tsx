@@ -4,22 +4,23 @@ import { ISingleArticle } from 'api/articles/types'
 import Image from 'next/image'
 import { buildLogData } from 'utils/buildLogData'
 import { getSingleArticle } from 'api/articles'
-import { logger } from 'services/logger'
+
+// import { logger } from 'services/logger'
 
 // import { winstonLogger } from 'services/winston'
 
 interface IProps {
   article: ISingleArticle
   logData: string
-  statusCode: number
+  res: any
 }
 
-const DynamicArticle: FC<IProps> = ({ article, logData, statusCode }) => {
+const DynamicArticle: FC<IProps> = ({ article, logData, res }) => {
   if (!article) return <p>Loading...</p>
 
-  console.log('statusCode', statusCode)
+  // console.log('res', res)
 
-  console.log('logData', logData)
+  // console.log('logData', logData)
 
   return (
     <div className='w-75 pt-4'>
@@ -71,7 +72,8 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const apiResponse = await getSingleArticle(context.resolvedUrl.slice(1))
   const { req, res } = context
   const logData = buildLogData(apiResponse, req, res)
-  await logger(JSON.stringify(logData))
+  console.log('res', res)
+  // await logger(JSON.stringify(logData))
 
   // winstonLogger.info('DynamicArticle getServerSideProps info')
 
@@ -79,7 +81,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     props: {
       article: apiResponse.data,
       logData: JSON.stringify(logData),
-      statusCode: res.statusCode,
+      // res,
     },
   }
 }
