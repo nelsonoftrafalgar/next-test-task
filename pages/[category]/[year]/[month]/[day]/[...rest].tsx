@@ -65,7 +65,13 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const apiResponse = await getSingleArticle(context.resolvedUrl.slice(1))
   const { req, res } = context
   const logData = buildLogData(apiResponse, req, res)
-  await logger(JSON.stringify(logData))
+  await logger(
+    JSON.stringify({
+      response: {
+        statusCode: res.statusCode,
+      },
+    })
+  )
 
   // winstonLogger.info('DynamicArticle getServerSideProps info')
 
