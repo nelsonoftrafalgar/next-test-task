@@ -67,9 +67,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const logData = buildLogData(apiResponse, req, res)
   await logger(
     JSON.stringify({
-      response: {
-        statusCode: res.statusCode,
-      },
+      statusCode: res.statusCode,
     })
   )
 
