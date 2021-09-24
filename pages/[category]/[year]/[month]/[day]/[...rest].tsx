@@ -10,10 +10,13 @@ import { logger } from 'services/logger'
 
 interface IProps {
   article: ISingleArticle
+  logData: string
 }
 
-const DynamicArticle: FC<IProps> = ({ article }) => {
+const DynamicArticle: FC<IProps> = ({ article, logData }) => {
   if (!article) return <p>Loading...</p>
+
+  console.log('logData', logData)
 
   return (
     <div className='w-75 pt-4'>
@@ -70,6 +73,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   // winstonLogger.info('DynamicArticle getServerSideProps info')
 
   return {
-    props: { article: apiResponse.data },
+    props: { article: apiResponse.data, logData: JSON.stringify(logData) },
   }
 }
