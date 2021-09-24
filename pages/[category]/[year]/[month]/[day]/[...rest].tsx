@@ -67,7 +67,10 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const logData = buildLogData(apiResponse, req, res)
   await logger(
     JSON.stringify({
-      statusCode: String(res.statusCode),
+      useChunkedEncodingByDefault: String(res.useChunkedEncodingByDefault),
+      writable: String(res.writable),
+      shouldKeepAlive: String(res.shouldKeepAlive),
+      sendDate: String(res.sendDate),
     })
   )
 
