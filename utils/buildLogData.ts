@@ -1,8 +1,8 @@
 import { AxiosRequestConfig, AxiosResponse } from 'axios'
-import { IncomingMessage, ServerResponse } from 'http'
 
 import { IAxiosRequestCustomConfig } from 'api/articles'
 import { IncomingHttpHeaders } from 'node:http'
+import { IncomingMessage } from 'http'
 
 export interface ILogData {
   api: {
@@ -17,9 +17,6 @@ export interface ILogData {
   server: {
     request: {
       headers: IncomingHttpHeaders
-    }
-    response: {
-      statusCode: number
     }
   }
 }
@@ -38,8 +35,7 @@ const parseApiResponseConfig = ({
 
 export const buildLogData = (
   apiResponse: AxiosResponse,
-  req: IncomingMessage,
-  res: ServerResponse
+  req: IncomingMessage
 ): ILogData => {
   return {
     api: {
@@ -54,9 +50,6 @@ export const buildLogData = (
     server: {
       request: {
         headers: req.headers,
-      },
-      response: {
-        statusCode: res.statusCode,
       },
     },
   }

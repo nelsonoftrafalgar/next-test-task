@@ -61,10 +61,12 @@ const DynamicArticle: FC<IProps> = ({ article }) => {
 
 export default DynamicArticle
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const apiResponse = await getSingleArticle(context.resolvedUrl.slice(1))
-  const { req, res } = context
-  const logData = buildLogData(apiResponse, req, res)
+export const getServerSideProps: GetServerSideProps = async ({
+  req,
+  resolvedUrl,
+}) => {
+  const apiResponse = await getSingleArticle(resolvedUrl.slice(1))
+  const logData = buildLogData(apiResponse, req)
   await logger(JSON.stringify(logData))
 
   // winstonLogger.info('DynamicArticle getServerSideProps info')
