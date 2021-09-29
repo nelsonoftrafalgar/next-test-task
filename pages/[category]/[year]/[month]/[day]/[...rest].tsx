@@ -1,12 +1,14 @@
-import { buildErrorLogData, buildLogData } from 'utils/buildLogData'
+// import { buildErrorLogData, buildLogData } from 'utils/buildLogData'
 
-import { AxiosError } from 'axios'
+// import { AxiosError } from 'axios'
+
 import { FC } from 'react'
 import { GetServerSideProps } from 'next'
 import { ISingleArticle } from 'api/articles/types'
 import Image from 'next/image'
 import { getSingleArticle } from 'api/articles'
-import { logger } from 'services/logger'
+
+// import { logger } from 'services/logger'
 
 // import { winstonLogger } from 'services/winston'
 
@@ -64,13 +66,13 @@ const DynamicArticle: FC<IProps> = ({ article }) => {
 export default DynamicArticle
 
 export const getServerSideProps: GetServerSideProps = async ({
-  req,
+  // req,
   resolvedUrl,
 }) => {
   try {
     const apiResponse = await getSingleArticle(resolvedUrl.slice(1))
-    const logData = buildLogData(apiResponse, req)
-    await logger(JSON.stringify(logData))
+    // const logData = buildLogData(apiResponse, req)
+    // await logger(JSON.stringify(logData))
 
     // winstonLogger.info('DynamicArticle getServerSideProps info')
 
@@ -80,8 +82,8 @@ export const getServerSideProps: GetServerSideProps = async ({
       },
     }
   } catch (error) {
-    const errorLogData = buildErrorLogData(error as AxiosError, req)
-    await logger(JSON.stringify(errorLogData))
+    // const errorLogData = buildErrorLogData(error as AxiosError, req)
+    // await logger(JSON.stringify(errorLogData))
 
     return {
       notFound: true,
