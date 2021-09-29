@@ -85,6 +85,9 @@ export const getServerSideProps: GetServerSideProps = async ({
 
     return {
       notFound: true,
+      redirect: {
+        destination: '/404',
+      },
     }
   }
 }
