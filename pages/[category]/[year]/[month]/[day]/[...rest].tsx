@@ -70,6 +70,7 @@ export const getServerSideProps: GetServerSideProps = async ({
   resolvedUrl,
 }) => {
   try {
+    console.log('RUN GETSERVERSIDEPROPS')
     const apiResponse = await getSingleArticle(resolvedUrl.slice(1))
     // const logData = buildLogData(apiResponse, req)
     // await logger(JSON.stringify(logData))
