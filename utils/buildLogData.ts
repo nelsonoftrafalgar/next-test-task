@@ -20,7 +20,7 @@ export interface ILogData {
   }
   server?: {
     request: {
-      headers: IncomingHttpHeaders
+      headers: IncomingHttpHeaders | any
     }
   }
 }
@@ -34,6 +34,19 @@ const parseApiResponseConfig = ({
     url,
     method,
     headers,
+  }
+}
+
+const getCircularReplacer = () => {
+  const seen = new WeakSet()
+  return (key: any, value: any) => {
+    if (typeof value === 'object' && value !== null) {
+      if (seen.has(value)) {
+        return
+      }
+      seen.add(value)
+    }
+    return value
   }
 }
 
@@ -57,7 +70,7 @@ export const buildLogData = (
     },
     server: {
       request: {
-        headers: req.headers,
+        headers: JSON.stringify(req, getCircularReplacer()),
       },
     },
   }
