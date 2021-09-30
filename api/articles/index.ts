@@ -56,5 +56,5 @@ export const getSingleArticle = async (url: string) => {
       },
     }
   )
-  return response
+  return response.data
 }
