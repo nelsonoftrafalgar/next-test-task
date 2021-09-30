@@ -1,16 +1,15 @@
-// import { buildErrorLogData, buildLogData } from 'utils/buildLogData'
+import { FC, useEffect } from 'react'
+import { buildErrorLogData, buildLogData } from 'utils/buildLogData'
 
-// import { AxiosError } from 'axios'
-
-import { FC } from 'react'
+import { AxiosError } from 'axios'
 import { GetServerSideProps } from 'next'
 import { ISingleArticle } from 'api/articles/types'
 import Image from 'next/image'
+import { buildClientLogData } from 'utils/buildLogData'
 import { getSingleArticle } from 'api/articles'
+import { logger } from 'services/logger'
 import { useRouter } from 'next/router'
 import useSWR from 'swr'
-
-// import { logger } from 'services/logger'
 
 // import { winstonLogger } from 'services/winston'
 
@@ -19,13 +18,20 @@ interface IProps {
 }
 
 const DynamicArticle: FC<IProps> = ({ article }) => {
-  const router = useRouter()
-  const { data } = useSWR(
-    !article ? router.asPath.slice(1) : null,
-    getSingleArticle
-  )
+  const { asPath } = useRouter()
+  const { data } = useSWR(!article ? asPath.slice(1) : null, getSingleArticle, {
+    revalidateOnFocus: false,
+  })
 
-  const clientSideData = article || data
+  useEffect(() => {
+    if (data) {
+      const logClientData = async () =>
+        await logger(JSON.stringify(buildClientLogData(data)))
+      logClientData()
+    }
+  }, [data])
+
+  const clientSideData = article || data?.data
 
   if (!clientSideData) return <p>Loading...</p>
 
@@ -79,23 +85,27 @@ export const getServerSideProps: GetServerSideProps = async ({
   req,
   resolvedUrl,
 }) => {
-  console.log('req.headers.referer', req.headers.referer)
-  console.log('env SITE_URL', process.env.SITE_URL)
+  if (req.headers.referer === process.env.SITE_URL) {
+    return {
+      props: {
+        article: null,
+      },
+    }
+  }
+
   try {
-    const apiResponse = req.headers.referer
-      ? null
-      : await getSingleArticle(resolvedUrl.slice(1))
-    // const logData = buildLogData(apiResponse, req)
-    // await logger(JSON.stringify(logData))
+    const apiResponse = await getSingleArticle(resolvedUrl.slice(1))
+    const logData = buildLogData(apiResponse, req)
+    await logger(JSON.stringify(logData))
 
     return {
       props: {
-        article: apiResponse || null,
+        article: apiResponse.data,
       },
     }
   } catch (error) {
-    // const errorLogData = buildErrorLogData(error as AxiosError, req)
-    // await logger(JSON.stringify(errorLogData))
+    const errorLogData = buildErrorLogData(error as AxiosError, req)
+    await logger(JSON.stringify(errorLogData))
 
     return {
       notFound: true,

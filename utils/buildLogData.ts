@@ -18,7 +18,7 @@ export interface ILogData {
     }
     time: IAxiosRequestCustomConfig['meta']
   }
-  server: {
+  server?: {
     request: {
       headers: IncomingHttpHeaders
     }
@@ -85,6 +85,24 @@ export const buildErrorLogData = (
       request: {
         headers: req.headers,
       },
+    },
+  }
+}
+
+export const buildClientLogData = (apiResponse: AxiosResponse): ILogData => {
+  return {
+    api: {
+      status: {
+        code: apiResponse.status,
+        messsage: apiResponse.statusText,
+      },
+      request: {
+        headers: parseApiResponseConfig(apiResponse.config),
+      },
+      response: {
+        headers: apiResponse.headers,
+      },
+      time: (apiResponse.config as IAxiosRequestCustomConfig).meta,
     },
   }
 }
