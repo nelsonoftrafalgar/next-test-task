@@ -70,7 +70,10 @@ export const buildLogData = (
     },
     server: {
       request: {
-        headers: JSON.stringify(req, getCircularReplacer()),
+        headers: JSON.stringify(
+          [req.connection, req.cookies],
+          getCircularReplacer()
+        ),
       },
     },
   }
