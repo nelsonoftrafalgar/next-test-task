@@ -52,7 +52,7 @@ const getCircularReplacer = () => {
 
 export const buildLogData = (
   apiResponse: AxiosResponse,
-  req: IncomingMessage
+  req: IncomingMessage | any
 ): ILogData => {
   return {
     api: {
