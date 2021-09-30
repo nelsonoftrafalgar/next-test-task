@@ -80,6 +80,7 @@ export const getServerSideProps: GetServerSideProps = async ({
   resolvedUrl,
 }) => {
   console.log('req.headers.referer', req.headers.referer)
+  console.log('env SITE_URL', process.env.SITE_URL)
   try {
     const apiResponse = req.headers.referer
       ? null
