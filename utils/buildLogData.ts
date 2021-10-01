@@ -20,7 +20,7 @@ export interface ILogData {
   }
   server?: {
     request: {
-      headers: IncomingHttpHeaders | any
+      headers: IncomingHttpHeaders
     }
   }
 }
@@ -37,22 +37,9 @@ const parseApiResponseConfig = ({
   }
 }
 
-const getCircularReplacer = () => {
-  const seen = new WeakSet()
-  return (key: any, value: any) => {
-    if (typeof value === 'object' && value !== null) {
-      if (seen.has(value)) {
-        return
-      }
-      seen.add(value)
-    }
-    return value
-  }
-}
-
 export const buildLogData = (
   apiResponse: AxiosResponse,
-  req: IncomingMessage | any
+  req: IncomingMessage
 ): ILogData => {
   return {
     api: {
@@ -70,10 +57,7 @@ export const buildLogData = (
     },
     server: {
       request: {
-        headers: JSON.stringify(
-          [req.connection, req.cookies],
-          getCircularReplacer()
-        ),
+        headers: req.headers,
       },
     },
   }
