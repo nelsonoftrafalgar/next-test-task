@@ -1,4 +1,5 @@
 import { Col, Container, Row } from 'react-bootstrap'
+import { useEffect, useState } from 'react'
 
 import ArticlesMenu from './ArticlesMenu'
 import { IInfiniteScrollData } from 'api/articles/types'
@@ -10,7 +11,6 @@ import { filterByTag } from 'utils/filterByTag'
 import { getInitialArticles } from 'api/articles'
 import useSWR from 'swr'
 import useSWRInfinite from 'swr/infinite'
-import { useState } from 'react'
 
 const Articles = () => {
   const [selectedTag, setSelectedTag] = useState('')
@@ -38,6 +38,7 @@ const Articles = () => {
   const infiniteData = data?.reduce((acc, val) => [...acc, ...val], []) || []
   const filteredInitialData = filterByTag(initialData!.articles, selectedTag)
   const filteredInfiniteData = filterByTag(infiniteData, selectedTag)
+  const path = '/[category]/[year]/[month]/[day]/[rest]'
 
   return (
     <>
@@ -53,7 +54,7 @@ const Articles = () => {
             .slice(0, 1)
             .map(({ uuid, link, images, headline }) => (
               <Col md={8} key={uuid}>
-                <Link href={link}>
+                <Link href={path} as={link}>
                   <a>
                     <div className='articles-image-container'>
                       <Image
@@ -79,7 +80,7 @@ const Articles = () => {
                 .slice(1, 3)
                 .map(({ uuid, link, images, headline }) => (
                   <Col xs={6} md={12} key={uuid}>
-                    <Link href={link}>
+                    <Link href={path} as={link}>
                       <a>
                         <div className='articles-image-container'>
                           <Image
@@ -122,7 +123,7 @@ const Articles = () => {
               .slice(3)
               .map(({ uuid, link, images, headline, leadin }) => (
                 <Col xs={6} md={12} key={uuid} className='mb-4'>
-                  <Link href={link}>
+                  <Link href={path} as={link}>
                     <a className='d-flex flex-column flex-md-row'>
                       <div className='articles-image-container small'>
                         <Image
@@ -148,7 +149,7 @@ const Articles = () => {
             {filteredInfiniteData.map(
               ({ uuid, link, images, headline, leadin }) => (
                 <Col xs={6} md={12} key={uuid} className='mb-4'>
-                  <Link href='/[...rest]' as={link}>
+                  <Link href={path} as={link}>
                     <a className='d-flex flex-column flex-md-row'>
                       <div className='articles-image-container small'>
                         <Image

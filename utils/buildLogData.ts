@@ -25,11 +25,9 @@ export interface ILogData {
   }
 }
 
-const parseApiResponseConfig = ({
-  url,
-  method,
-  headers,
-}: AxiosRequestConfig) => {
+const parseApiResponseConfig = (config: AxiosRequestConfig) => {
+  if (!config) return {}
+  const { url, method, headers } = config
   return {
     url,
     method,

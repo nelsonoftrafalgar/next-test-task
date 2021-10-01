@@ -83,8 +83,9 @@ export default DynamicArticle
 
 export const getServerSideProps: GetServerSideProps = async ({
   req,
-  resolvedUrl,
+  query,
 }) => {
+  const path = Object.values(query).join('/')
   if (req.headers.referer === process.env.SITE_URL) {
     return {
       props: {
@@ -94,7 +95,7 @@ export const getServerSideProps: GetServerSideProps = async ({
   }
 
   try {
-    const apiResponse = await getSingleArticle(resolvedUrl.slice(1))
+    const apiResponse = await getSingleArticle(path)
     const logData = buildLogData(apiResponse, req)
     await logger(JSON.stringify(logData))
 
