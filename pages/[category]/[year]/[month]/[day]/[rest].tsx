@@ -86,7 +86,7 @@ export const getServerSideProps: GetServerSideProps = async ({
   query,
 }) => {
   const path = Object.values(query).join('/')
-  if (req.headers.referer === process.env.SITE_URL) {
+  if (req.headers['sec-fetch-site'] === 'same-origin') {
     return {
       props: {
         article: null,
