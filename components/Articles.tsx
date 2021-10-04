@@ -1,5 +1,4 @@
 import { Col, Container, Row } from 'react-bootstrap'
-import { useEffect, useState } from 'react'
 
 import ArticlesMenu from './ArticlesMenu'
 import { IInfiniteScrollData } from 'api/articles/types'
@@ -11,11 +10,14 @@ import { filterByTag } from 'utils/filterByTag'
 import { getInitialArticles } from 'api/articles'
 import useSWR from 'swr'
 import useSWRInfinite from 'swr/infinite'
+import { useState } from 'react'
 
 const Articles = () => {
   const [selectedTag, setSelectedTag] = useState('')
   const [hasMore, setHasMore] = useState(true)
-  const { data: initialData } = useSWR('/api/articles', getInitialArticles)
+  const { data: initialData } = useSWR('/api/articles', getInitialArticles, {
+    revalidateOnFocus: false,
+  })
   const { size, setSize, data } = useSWRInfinite(
     (index: number) => {
       return `https://listapi.aripaev.ee/v1/category?categories=&exclude_categories=static&exclude_uuids=&limit=8&page=${
@@ -32,7 +34,8 @@ const Articles = () => {
         .then(({ data }) => {
           if (data.meta.current_page === data.meta.last_page) setHasMore(false)
           return data.articles
-        })
+        }),
+    { revalidateOnFocus: false }
   )
 
   const infiniteData = data?.reduce((acc, val) => [...acc, ...val], []) || []
