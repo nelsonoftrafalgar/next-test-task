@@ -7,7 +7,7 @@ import {
   PutLogEventsCommand,
 } from '@aws-sdk/client-cloudwatch-logs'
 
-const logGroupName = 'next-test-task-log-goup3'
+const logGroupName = 'next-test-task-log-goup'
 const logStreamName = `${
   new Date().toISOString().split('T')[0]
 }/next-test-task-log-stream`
@@ -30,7 +30,7 @@ const createLogGroup = async () => {
       await client.send(new CreateLogGroupCommand({ logGroupName }))
     }
   } catch (error) {
-    console.log(error)
+    console.log('Create log group error', error)
   }
 }
 
@@ -52,7 +52,7 @@ const createLogStream = async () => {
       )
     }
   } catch (error) {
-    console.log(error)
+    console.log('Create log stream error', error)
   }
 }
 
@@ -72,7 +72,7 @@ const sendLogEvent = async (message: string) => {
     })
     await client.send(logEvents)
   } catch (error) {
-    console.log(error)
+    console.log('Send log event error', error)
   }
 }
 
